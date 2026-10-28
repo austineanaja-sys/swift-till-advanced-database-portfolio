@@ -31,3 +31,14 @@ db.agents.find({
 db.agents.countDocuments({
   status: "Active"
 });
+
+// 7. Find agents with more than one terminal
+db.agents.find({
+  "terminals.1": { $exists: true }
+});
+
+// 8. Display only agent names and locations
+db.agents.find(
+  {},
+  { name: 1, location: 1, _id: 0 }
+);
