@@ -29,3 +29,23 @@ ORDER BY a.agent_id;
 SELECT terminal_id, terminal_serial, terminal_model, status
 FROM terminals
 WHERE status IN ('Faulty', 'Lost');
+-- Query 5: Check the execution plan before indexing
+EXPLAIN ANALYZE
+SELECT *
+FROM terminals
+WHERE terminal_model = 'PAX A920';
+
+-- Query 6: Create an index on terminal_model
+CREATE INDEX IF NOT EXISTS idx_terminals_model
+ON terminals (terminal_model);
+
+-- Query 7: Check the execution plan after indexing
+EXPLAIN ANALYZE
+SELECT *
+FROM terminals
+WHERE terminal_model = 'PAX A920';
+
+-- Query 8: Verify the indexes on terminals
+SELECT indexname, indexdef
+FROM pg_indexes
+WHERE tablename = 'terminals';
