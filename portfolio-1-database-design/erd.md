@@ -39,20 +39,32 @@ The relationship is maintained through the `agent_id` foreign key in the `termin
 
 3. ERD Diagram
 
-```text
-+-----------------------+       +------------------------+
-|        AGENTS         |       |       TERMINALS        |
-+-----------------------+       +------------------------+
-| PK agent_id           |  1    | PK terminal_id         |
-| first_name            |------<| FK agent_id            |
-| last_name             |       | terminal_serial (UNQ)  |
-| phone (UNQ)           |       | terminal_model         |
-| email (UNQ)           |       | assigned_date          |
-| location              |       | status                 |
-| registration_date     |       +------------------------+
-| status                |
-+-----------------------+
+
+```mermaid
+erDiagram
+    AGENTS ||--o{ TERMINALS : assigns
+
+    AGENTS {
+        int agent_id PK
+        varchar first_name
+        varchar last_name
+        varchar phone UK
+        varchar email UK
+        varchar location
+        date registration_date
+        varchar status
+    }
+
+    TERMINALS {
+        int terminal_id PK
+        varchar terminal_serial UK
+        int agent_id FK
+        varchar terminal_model
+        date assigned_date
+        varchar status
+    }
 ```
+
 
 4. Referential Integrity
 
